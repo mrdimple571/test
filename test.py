@@ -1,3 +1,5 @@
+# Everything Come back with Json and Convert to Python Dictionary 
+
 # Import Python Modules
 import yaml
 import base64
@@ -21,9 +23,13 @@ cma = input("Enter CMA IP :")
 # Connect with the CMA
 client_args = APIClientArgs(server=cma)
 session = APIClient(client_args)
-session.login(user, password, domain=cma)
+login_response = session.login(user, password, domain=cma)
+print(login_response) 
 
-# Run the API Call
+# Run the API Call - Look at Web Services! 
+
+# Check Session Changes 
+session.api_call(
 
 #Logout of CMA
 session.api_call("logout")
