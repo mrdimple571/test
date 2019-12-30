@@ -1,2 +1,0 @@
-show_host = session.api_call('show-host', payload={"name:LHQ-Nexpose_Mgmt"})
-print(show_host)
