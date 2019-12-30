@@ -1,0 +1,9 @@
+query = session.api_query(api_query, details_level=details)
+
+# Setting Up a Dictionary for the Query Data
+query_dict={}
+
+for network in query.data:
+    if "subnet4" in network:
+        print(f"{network['name']} - {network['subnet4']}")
+        query_dict[network['name']] = network["subnet4"]
