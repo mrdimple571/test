@@ -1,0 +1,39 @@
+import getpass
+import logging
+
+from cpapi import APIClientArgs, APIClient
+
+api_query = "show-access-rulebase"
+details = "full"
+log = f"/home/chris/cp_mgmt_api_python_sdk/tasks/log/" + api_query + ".log"
+net_layer = "swap4 network"
+policy = "name"
+cma = "10.12.141.244"
+user = "chris.chen"
+password = getpass.getpass("Enter password (Hidden): ")
+
+client_args = APIClientArgs(server=cma)
+session = APIClient(client_args)
+
+logging.basicConfig(
+        filename = log,
+        level = logging.INFO,
+        format = "%(levelname)s:%(asctime)s:%(message)s"
+        )
+logger = logging.getLogger()
+
+login_response = session.login(user, password, domain=cma)
+logger.info(login_response)
+
+query = session.api_query(api_query, details_level=details, payload={policy:net_layer})
+
+logger.info(query)
+
+for response in query.data:
+    for target in query.data["rulebase"]:
+        if target['type'] == "access-section":
+            print(target['rule-number'])
+
+logout_response = session.api_call("logout")
+print(logout_response)
+logger.info(logout_response)
